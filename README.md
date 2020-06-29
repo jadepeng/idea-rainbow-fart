@@ -9,6 +9,22 @@
 
 vscode的下载尝试过，但是作为日常将IDEA作为主力生产工具的同学来说，如何体验呢? 于是假期花了一点时间，写了一个idea版本的插件[idea-rainbow-fart](https://github.com/jadepeng/idea-rainbow-fart)。
 
+## 安装方法
+
+
+先到[https://github.com/jadepeng/idea-rainbow-fart/releases](https://github.com/jadepeng/idea-rainbow-fart/releases) 下载最新的插件。
+
+![Release](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422367202.png)
+
+下载rainbow-fart-1.0-SNAPSHOT.zip，然后打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
+
+将`rainbow-fart-1.0-SNAPSHOT.zip`解压到plugins目录，如图所示：
+
+![解压](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422479468.png)
+
+
+然后重启IDEA即可。
+
 ## 使用说明
 
 默认使用中文语音包，可以在setting里设置
