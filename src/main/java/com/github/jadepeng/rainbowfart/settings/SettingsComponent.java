@@ -15,9 +15,6 @@ import javax.swing.*;
 public class SettingsComponent {
     private final TextFieldWithBrowseButton txtPackagePath = new TextFieldWithBrowseButton();
     private final JPanel myMainPanel;
-//    private final JBTextField txtPackagePath = new JBTextField();
-    private final JBCheckBox chkEnable = new JBCheckBox("Enable Rainbow Fart");
-
     public SettingsComponent() {
 
         txtPackagePath.addBrowseFolderListener("Choose Custom Voice Package","Custom Voice Package Path:",null,
@@ -32,17 +29,5 @@ public class SettingsComponent {
         FartSettings settings = FartSettings.getInstance();
         this.chkEnable.setSelected(settings.isEnable());
         this.txtPackagePath.setText(settings.getCustomVoicePackage());
-    }
-
-    public JPanel component() {
-        return myMainPanel;
-    }
-
-    public boolean isRainbowEnabled() {
-        return chkEnable.isSelected();
-    }
-
-    public String getPackage() {
-        return this.txtPackagePath.getText();
     }
 }

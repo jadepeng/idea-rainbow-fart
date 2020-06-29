@@ -8,14 +8,6 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenLocal()
-    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://repo.eclipse.org/content/groups/releases/" }
-    maven { url "https://www.jetbrains.com/intellij-repository/releases" }
-    maven { url "https://www.jetbrains.com/intellij-repository/snapshots" }
-}
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation('javazoom:jlayer:1.0.1')

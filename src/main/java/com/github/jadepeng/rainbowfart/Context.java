@@ -90,44 +90,6 @@ public class Context {
         });
     }
 
-
-    static String readVoicePackageJson(String name) throws IOException {
-        FartSettings settings = FartSettings.getInstance();
-        boolean isCustomer = StringUtils.isNotEmpty(settings.getCustomVoicePackage());
-        if (isCustomer) {
-            return FileUtils.readFileToString(Paths.get(settings.getCustomVoicePackage(), name).toFile(), "utf-8");
-        }
-        URL filePath = ResourcesLoader.class.getClassLoader().getResource("/build-in-voice-chinese/" + name);
-        return IOUtils.toString(filePath.openStream(), "utf-8");
-    }
-
-    /**
-     * 加载配置
-     */
-    public static void loadConfig() {
-        try {
-            //
-            FartSettings settings = FartSettings.getInstance();
-            if (!settings.isEnable()) {
-                return;
-            }
-            String json = readVoicePackageJson("manifest.json");
-            Gson gson = new Gson();
-            Manifest manifest = gson.fromJson(json, Manifest.class);
-            // load contributes.json
-            if (manifest.getContributes() == null) {
-                String contributesText = readVoicePackageJson("contributes.json");
-                Manifest contributes = gson.fromJson(contributesText, Manifest.class);
-                if (contributes.getContributes() != null) {
-                    manifest.setContributes(contributes.getContributes());
-                }
-            }
-            Context.init(manifest);
-
-        } catch (IOException e) {
-        }
-    }
-
     static void scheduleTimerTask(Calendar tomorrow, Calendar today, Date now, String type) {
         if (schedule.containsKey(type)) {
             String timeString = schedule.get(type);
