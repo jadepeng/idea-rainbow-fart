@@ -1,14 +1,12 @@
 <idea-plugin>
-    <id>com.iflytek.datahub</id>
+    <id>com.github.jadepeng.rainbowfart</id>
     <name>Rainbow Fart</name>
     <vendor email="pjq518@qq.com" url="https://github.com/jadepeng">jadepeng</vendor>
 
     <description><![CDATA[
         <strong>Rainbow Fart for IntelliJ based IDEs</strong>
         <br/>
-        IntelliJ Rainbow Fart is an extension that keeps giving you compliment while you are coding. It will check the keywords in your code to play relative sounds.
-
-        Rainbow Fart is a literal translation word from Chinese, which means giving somebody exaggerated compliment that even seems a little fake. It is not connected to any specific group or individuals.
+        An IDEA extension that keeps giving you compliment while you are coding.
         ]]></description>
 
     <change-notes><![CDATA[
@@ -21,7 +19,7 @@
     </change-notes>
 
     <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="181"/>
+    <idea-version since-build="202"/>
 
     <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
@@ -29,9 +27,9 @@
 
 
     <extensions defaultExtensionNs="com.intellij">
-        <editorTypedHandler implementationClass="com.github.jadepeng.rainbowfart.RainbowFartTypedHandler"
+        <editorTypedHandler implementationClass="com.github.jadepeng.rainbowfart.TypedHandler"
                             id="fart"/>
-        <postStartupActivity implementation="com.github.jadepeng.rainbowfart.ResourcesLoader"/>
+        <postStartupActivity implementation="com.github.jadepeng.rainbowfart.PluginStarter"/>
         <applicationService serviceImplementation="com.github.jadepeng.rainbowfart.settings.FartSettings"/>
         <applicationConfigurable instance="com.github.jadepeng.rainbowfart.settings.MainSetting"/>
     </extensions>

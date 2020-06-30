@@ -17,7 +17,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * app context
+ * app context 21:00 23:30 23:00 23:30
+ * if while if while while test if
  *
  * @author jqpeng
  */
@@ -30,7 +31,7 @@ public class Context {
      */
     private static Map<String, List<String>> keyword2Voices;
 
-    final static String eachHour = "$time_each_hour";
+    final static String BUILD_IN_VOICE_PACKAGE = "xiaoling";
 
     static HashMap<String, String> schedule = new HashMap<String, String>() {{
         put("$time_morning", "0930");
@@ -97,7 +98,7 @@ public class Context {
         if (isCustomer) {
             return FileUtils.readFileToString(Paths.get(settings.getCustomVoicePackage(), name).toFile(), "utf-8");
         }
-        URL filePath = ResourcesLoader.class.getClassLoader().getResource("/build-in-voice-chinese/" + name);
+        URL filePath = PluginStarter.class.getClassLoader().getResource("/" + BUILD_IN_VOICE_PACKAGE + "/" + name);
         return IOUtils.toString(filePath.openStream(), "utf-8");
     }
 
@@ -141,7 +142,7 @@ public class Context {
             scheduledExecutorService.scheduleAtFixedRate(() -> {
                 play(keyword2Voices.get(type));
             }, delay, 24 * 60 * 60 * 1000, TimeUnit.MILLISECONDS);
-        } else if (type.equals(eachHour)) {
+        } else if (type.equals("$time_each_hour")) {
             int minutes = new Date().getMinutes();
             // 整点报时
             scheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -149,8 +150,7 @@ public class Context {
                 if (hour >= 10 && hour <= 17) {
                     play(keyword2Voices.get(type));
                 }
-                //(60 - minutes) * 60 * 1000
-            }, 600, 60 * 60 * 1000, TimeUnit.MILLISECONDS);
+            }, (60 - minutes) * 60 * 1000, 60 * 60 * 1000, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -210,7 +210,7 @@ public class Context {
             try {
                 InputStream inputStream = null;
                 if (StringUtils.isEmpty(settings.getCustomVoicePackage())) {
-                    inputStream = Context.class.getResourceAsStream("/build-in-voice-chinese/" + file);
+                    inputStream = Context.class.getResourceAsStream("/" + BUILD_IN_VOICE_PACKAGE + "/" + file);
                 } else {
                     File mp3File = Paths.get(settings.getCustomVoicePackage(), file).toFile();
                     if (mp3File.exists()) {

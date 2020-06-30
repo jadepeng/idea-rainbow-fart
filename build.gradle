@@ -26,6 +26,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      1.0.2 内置中文包更新为玲姐姐语音包，需要官方语音包的可以从vscode版本下载
+      1.0.1 支持内置中文语音以及自定义语音包.<br>
+      <em>rainbow-fart</em>"""
 }

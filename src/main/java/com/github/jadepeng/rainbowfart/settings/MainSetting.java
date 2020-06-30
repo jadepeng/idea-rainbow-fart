@@ -64,6 +64,8 @@ public class MainSetting implements Configurable {
         if (settingForm != null) {
             settings.setEnable(settingForm.isRainbowEnabled());
             settings.setCustomVoicePackage(settingForm.getPackage());
+            settings.setType(settings.getType());
+            settings.setTtsSettings(settings.getTtsSettings());
         }
         // 重新加载
         Context.loadConfig();

@@ -1,0 +1,313 @@
+{
+  "name": "x_xiaoling",
+  "avatar": "avatar.jpg",
+  "version": "1.0.0",
+  "description": "讯飞小玲",
+  "languages": [
+    "javascript",
+    "java",
+    "c++"
+  ],
+  "author": "jadepeng",
+  "gender": "female",
+  "locale": "zh",
+  "contributes": [
+    {
+      "keywords": [
+        "function",
+        "\u003d\u003e",
+        "-\u003e",
+        "fun",
+        "def ",
+        "main"
+      ],
+      "voices": [
+        "function1.mp3",
+        "function2.mp3",
+        "function3.mp3"
+      ],
+      "text": [
+        "哇哦，你的回调[diao4]函数写的好棒棒呀",
+        "这个函数的命名用我的名字怎么样呀？",
+        "再厉害的函数，也执行不出我对你的喜欢！"
+      ]
+    },
+    {
+      "keywords": [
+        "\u003d\u003e",
+        "-\u003e"
+      ],
+      "voices": [
+        "array1.mp3",
+        "array2.mp3"
+      ],
+      "text": [
+        "你写箭头函数的样子好帅呀！",
+        "你这个箭头函数用的老牛逼了"
+      ],
+      "name": "array"
+    },
+    {
+      "keywords": [
+        "if",
+        "else"
+      ],
+      "voices": [
+        "if1.mp3",
+        "if2.mp3",
+        "if3.mp3"
+      ],
+      "text": [
+        "你就是因为想太多如果，所以才交不到女朋友吧？",
+        " 别试了，我的可爱不需要用 if 来判断！",
+        " 人生没有那么多如果，有没有比编程更容易呢？"
+      ]
+    },
+    {
+      "keywords": [
+        "for",
+        "while"
+      ],
+      "voices": [
+        "for1.mp3",
+        "for2.mp3",
+        "for3.mp3"
+      ],
+      "text": [
+        "这段循环是为我写的吗？",
+        "你是在遍历你的鱼塘吗？",
+        "你就算运行 1 天也遍历不完我的可爱！"
+      ]
+    },
+    {
+      "keywords": [
+        "await"
+      ],
+      "voices": [
+        "await1.mp3",
+        "await2.mp3",
+        "await3.mp3"
+      ],
+      "text": [
+        "你在等什么？是不是在等我！",
+        "别忘了给函数体加 async 哦。",
+        " 别等啦！如果你有喜欢的女孩子，就要赶快表白。"
+      ]
+    },
+    {
+      "keywords": [
+        "catch",
+        "except",
+        "finally",
+        "err !\u003d nil",
+        "err!\u003dnil"
+      ],
+      "voices": [
+        "catch1.mp3",
+        "catch2.mp3",
+        "catch3.mp3"
+      ],
+      "text": [
+        "嘻嘻，捕捉了这么多异常，却捉不到一个女朋友。",
+        "别太关注程序的异常，多关注下身边的女孩子吧！",
+        " 听说，异步代码捕捉不到异常哦！"
+      ]
+    },
+    {
+      "keywords": [
+        "import",
+        "include"
+      ],
+      "voices": [
+        "import1.mp3",
+        "import2.mp3",
+        "import3.mp3"
+      ],
+      "text": [
+        "我的可爱已成功导入！",
+        "我的美貌已成功导入！",
+        "我的才华已成功导入！"
+      ]
+    },
+    {
+      "keywords": [
+        "v-html"
+      ],
+      "voices": [
+        "v-html1.mp3"
+      ],
+      "text": [
+        "记得校验内容，预防 XSS 攻击哦。"
+      ]
+    },
+    {
+      "keywords": [
+        "fuck",
+        "shit"
+      ],
+      "voices": [
+        "fuck1.mp3",
+        "fuck2.mp3"
+      ],
+      "text": [
+        "怎么了？是不是产品需求又改了？",
+        "我们和产品经理友好交流下吧！"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_morning"
+      ],
+      "voices": [
+        "time_morning1.mp3"
+      ],
+      "text": [
+        "早上好呀!"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_before_noon"
+      ],
+      "voices": [
+        "time_before_noon1.mp3",
+        "time_before_noon2.mp3"
+      ],
+      "text": [
+        "你写箭头函数的样子好帅呀！",
+        "你这个箭头函数用的老牛逼了"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_noon"
+      ],
+      "voices": [
+        "time_noon1.mp3"
+      ],
+      "text": [
+        "要午休下午才能有精神呀。"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_evening"
+      ],
+      "voices": [
+        "time_evening1.mp3"
+      ],
+      "text": [
+        "你怎么还没下班呀？"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_midnight"
+      ],
+      "voices": [
+        "time_midnight1.mp3",
+        "time_midnight2.mp3"
+      ],
+      "text": [
+        "很晚了哦，要早点休息！",
+        "你回家了吗，家里的亲人等着你哦！"
+      ]
+    },
+    {
+      "keywords": [
+        "$time_each_hour"
+      ],
+      "voices": [
+        "time_each_hour1.mp3",
+        "time_each_hour2.mp3",
+        "time_each_hour3.mp3",
+        "time_each_hour4.mp3",
+        "time_each_hour5.mp3"
+      ],
+      "text": [
+        "小哥哥你累不累呀？",
+        "写了好久了，起来休息一下吧。",
+        "写这么多代码，还不如给女孩子写情书！",
+        "你这么喜欢写代码，一定没有女朋友吧！",
+        "如果你用了别的小姐姐的语音包，我就掐死你哦！"
+      ]
+    },
+    {
+      "keywords": [
+        "test"
+      ],
+      "voices": [
+        "test1.mp3"
+      ],
+      "text": [
+        "亲，你要测试我们的友情好不好吗？"
+      ]
+    },
+    {
+      "keywords": [
+        "stream"
+      ],
+      "voices": [
+        "stream1.mp3"
+      ],
+      "text": [
+        "哇哦，stream被你用的出神入化!"
+      ]
+    },
+    {
+      "keywords": [
+        "parallel"
+      ],
+      "voices": [
+        "parallel1.mp3"
+      ],
+      "text": [
+        "太棒了，听说并行计算很快的呀！"
+      ]
+    },
+    {
+      "keywords": [
+        "parallel"
+      ],
+      "voices": [
+        "parallel1.mp3"
+      ],
+      "text": [
+        "太棒了，听说并行计算很快的呀！"
+      ]
+    },
+    {
+      "keywords": [
+        "and"
+      ],
+      "voices": [
+        "and1.mp3"
+      ],
+      "text": [
+        "小哥哥，我和你，心连心"
+      ]
+    },
+    {
+      "keywords": [
+        "volatile"
+      ],
+      "voices": [
+        "volatile1.mp3"
+      ],
+      "text": [
+        "不得了，小哥哥并发编程炉火纯青啊，而volatile在某些情况下性能更优哦"
+      ]
+    },
+    {
+      "keywords": [
+        "Atomic"
+      ],
+      "voices": [
+        "Atomic1.mp3"
+      ],
+      "text": [
+        "小哥哥理解了并发编程的真谛啊，使用Atomic再也不用担心出错了"
+      ]
+    }
+  ]
+}

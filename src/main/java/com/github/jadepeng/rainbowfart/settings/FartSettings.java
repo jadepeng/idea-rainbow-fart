@@ -14,6 +14,24 @@ public class FartSettings implements PersistentStateComponent<FartSettings> {
 
     protected boolean enable = true;
     protected String customVoicePackage;
+    protected TTSSettings ttsSettings;
+    private VoicePackageType type;
+
+    public VoicePackageType getType() {
+        return type;
+    }
+
+    public void setType(VoicePackageType type) {
+        this.type = type;
+    }
+
+    public TTSSettings getTtsSettings() {
+        return ttsSettings;
+    }
+
+    public void setTtsSettings(TTSSettings ttsSettings) {
+        this.ttsSettings = ttsSettings;
+    }
 
     public boolean isEnable() {
         return enable;
