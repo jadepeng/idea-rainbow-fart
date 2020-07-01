@@ -1,17 +1,14 @@
 # idea-rainbow-fart
-一个在你编程时疯狂称赞你的 IDEA扩展插件,兼容VSCode版本语音包 | An IDEA extension that keeps giving you compliment while you are coding, it will checks…
 
+一个在你编程时疯狂称赞你的 IDEA扩展插件,支持自定义关键词和文本，兼容VSCode版本语音包 | An IDEA extension that keeps giving you compliment while you are coding, it will checks…
 
 ## 安装方法
 
+到[releases](https://github.com/jadepeng/idea-rainbow-fart/releases) 下载最新的插件。
 
-先到[https://github.com/jadepeng/idea-rainbow-fart/releases](https://github.com/jadepeng/idea-rainbow-fart/releases) 下载最新的插件。
+下载Release，然后打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
 
-![Release](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422367202.png)
-
-下载rainbow-fart-1.0-SNAPSHOT.zip，然后打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
-
-将`rainbow-fart-1.0-SNAPSHOT.zip`解压到plugins目录，如图所示：
+将`rainbow-fart-1.x.zip`解压到plugins目录，如图所示：
 
 ![解压](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422479468.png)
 
@@ -19,7 +16,6 @@
 然后重启IDEA即可。
 
 ## 使用说明
-
 
 ### 使用内置语音包
 
@@ -38,7 +34,7 @@
 - 将voice package type设置为custom
 - 可以到 [https://github.com/topics/vscode-rainbow-fart](https://github.com/topics/vscode-rainbow-fart) 查找语音包。
 
-点击确定生效：
+点击确定生效。
 
 ### 使用TTS（推荐）
 
@@ -47,7 +43,6 @@
 ![彩虹屁设置](./docs/tts.png)
 
 TTS 使用科大讯飞提供的流式API。
-
 
 ## 鸣谢
 
