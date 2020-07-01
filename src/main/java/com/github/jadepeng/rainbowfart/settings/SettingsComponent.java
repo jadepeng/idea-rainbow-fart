@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,10 +43,13 @@ public class SettingsComponent {
     Map<String, String> name2vcn = new HashMap<>();
 
     JPanel ttsGroup;
-//    JBTextField txtApiId = new JBTextField();
+    //    JBTextField txtApiId = new JBTextField();
 //    JBTextField txtApiSecret = new JBTextField();
 //    JBTextField txtAppKey = new JBTextField();
     ComboBox cbxVcn = new ComboBox();
+
+    ComboBox cbxBuiltinPackage = new ComboBox(new ListComboBoxModel(Arrays.asList("built-in-voice-chinese", "built-in-voice-english", "tts-xiaoling")));
+
 
     TTSTableModel tableModel = new TTSTableModel();
 
@@ -66,15 +70,20 @@ public class SettingsComponent {
 //                .addLabeledComponent(new JBLabel("Api Key: "), txtAppKey, 1, false)
 //                .addLabeledComponent(new JBLabel("Api Secret:"), txtApiSecret, 1, false)
                 .addLabeledComponent(new JBLabel("VCN: "), cbxVcn, 1, false)
-                .addComponent(new JBLabel("Fart TTS Configuration: "), 0)
+                .addComponent(new JBLabel("Match Rule Setting: "), 0)
                 .addComponent(createTTSTable())
                 .getPanel();
 
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(chkEnable, 1)
                 .addLabeledComponent(new JBLabel("Voice Package Type: "), cbxType, 1, false)
+
+                .addComponent(new JBLabel("Builtin Configuration: "), 0)
+                .addLabeledComponent(new JBLabel("Choose Builtin Package: "), txtPackagePath, 1, false)
+                .addComponent(new JBLabel("Custom Configuration: "), 0)
                 .addLabeledComponent(new JBLabel("Custom Voice Package Path: "), txtPackagePath, 1, false)
-                .addLabeledComponent(new JBLabel("TTS Settings: "), new LinkLabel("https://www.xfyun.cn/services/online_tts", AllIcons.Icons.Ide.NextStep), 1, false)
+                .addComponent(new JBLabel("TTS Configuration: "), 0)
+//                .addLabeledComponent(new JBLabel("TTS: "), new LinkLabel("use: https://www.xfyun.cn/services/online_tts", AllIcons.Icons.Ide.NextStep), 1, false)
                 .addComponent(ttsGroup, 0)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
@@ -97,7 +106,8 @@ public class SettingsComponent {
                 cell.setText(cell.getText() + "\n");
             }
         });
-
+        columns.getColumn(0).setPreferredWidth(40);
+        columns.getColumn(0).setPreferredWidth(100);
         columns.getColumn(0).setCellEditor(new DefaultCellEditor(new JBTextField()));
         columns.getColumn(1).setCellEditor(cellEditor);
         columns.getColumn(2).setCellEditor(cellEditor);
@@ -158,6 +168,7 @@ public class SettingsComponent {
 //        this.txtApiSecret.setText(settings.getTtsSettings().getApiSecret());
         this.cbxVcn.setSelectedItem(settings.getTtsSettings().getVcnName());
         this.cbxType.setSelectedItem(settings.getType() == null ? VoicePackageType.Builtin.toString() : settings.getType().toString());
+        this.cbxBuiltinPackage.setSelectedItem(settings.getBuildinPackage());
     }
 
     public JPanel component() {
@@ -170,6 +181,10 @@ public class SettingsComponent {
 
     public String getPackage() {
         return this.txtPackagePath.getText();
+    }
+
+    public String getBuiltinPackage() {
+        return this.cbxBuiltinPackage.getSelectedItem().toString();
     }
 
     public VoicePackageType getType() {

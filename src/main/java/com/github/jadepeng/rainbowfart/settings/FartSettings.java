@@ -16,6 +16,15 @@ public class FartSettings implements PersistentStateComponent<FartSettings> {
     protected String customVoicePackage;
     protected TTSSettings ttsSettings;
     private VoicePackageType type;
+    protected String buildinPackage = "built-in-voice-chinese";
+
+    public String getBuildinPackage() {
+        return buildinPackage;
+    }
+
+    public void setBuildinPackage(String buildinPackage) {
+        this.buildinPackage = buildinPackage;
+    }
 
     public VoicePackageType getType() {
         return type;
@@ -74,9 +83,10 @@ public class FartSettings implements PersistentStateComponent<FartSettings> {
         this.enable = state.isEnable();
         this.ttsSettings = state.ttsSettings;
         this.type = state.type;
+        this.buildinPackage = state.getBuildinPackage();
     }
 
-    public static FartSettings getInstance(){
+    public static FartSettings getInstance() {
         return ServiceManager.getService(FartSettings.class);
     }
 }

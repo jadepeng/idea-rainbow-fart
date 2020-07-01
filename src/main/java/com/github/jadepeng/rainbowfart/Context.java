@@ -34,7 +34,7 @@ public class Context {
      */
     private static Map<String, Contribute> keyword2Contributes;
 
-    final static String BUILD_IN_VOICE_PACKAGE = "xiaoling";
+    final static String BUILD_IN_VOICE_PACKAGE = "/built-in-voice-packages/";
 
     static Pattern keywordPattern;
 
@@ -54,7 +54,7 @@ public class Context {
     static {
         preparePlayThreadPool = new ThreadPoolExecutor(2, 5,
                 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024),  new ThreadFactoryBuilder()
+                new LinkedBlockingQueue<>(1024), new ThreadFactoryBuilder()
                 .setNameFormat("prepare-play-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
     }
 
@@ -71,7 +71,7 @@ public class Context {
 
         manifest.getContributes().stream().parallel().forEach(contribute -> {
             contribute.getKeywords().forEach(keyword -> {
-                if(StringUtils.isBlank(keyword)){
+                if (StringUtils.isBlank(keyword)) {
                     return;
                 }
                 scheduleTimerTask(keyword);
@@ -108,7 +108,7 @@ public class Context {
         if (isCustomer) {
             return FileUtils.readFileToString(Paths.get(settings.getCustomVoicePackage(), name).toFile(), "utf-8");
         }
-        URL filePath = PluginStarter.class.getClassLoader().getResource("/" + BUILD_IN_VOICE_PACKAGE + "/" + name);
+        URL filePath = PluginStarter.class.getClassLoader().getResource(BUILD_IN_VOICE_PACKAGE + "/" + settings.getCustomVoicePackage() + "/" + name);
         return IOUtils.toString(filePath.openStream(), "utf-8");
     }
 
@@ -221,7 +221,7 @@ public class Context {
 
     public static void play(List<Contribute> contributes) {
         // play in thread
-        preparePlayThreadPool.submit(()-> Mp3Player.play(contributes));
+        preparePlayThreadPool.submit(() -> Mp3Player.play(contributes));
     }
 
     public static void main(String[] args) {

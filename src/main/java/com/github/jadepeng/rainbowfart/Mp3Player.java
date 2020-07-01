@@ -92,7 +92,7 @@ public class Mp3Player {
     }
 
     public static void play(List<Contribute> contributes) {
-         FartSettings settings = FartSettings.getInstance();
+        FartSettings settings = FartSettings.getInstance();
         if (!settings.isEnable()) {
             return;
         }
@@ -109,7 +109,7 @@ public class Mp3Player {
             try {
                 InputStream inputStream = null;
                 if (settings.getType() == VoicePackageType.Builtin) {
-                    inputStream = Context.class.getResourceAsStream("/" + Context.BUILD_IN_VOICE_PACKAGE + "/" + file);
+                    inputStream = Context.class.getResourceAsStream(Context.BUILD_IN_VOICE_PACKAGE + "/" + settings.getCustomVoicePackage() + "/" + file);
                 } else {
                     File mp3File = Paths.get(settings.getCustomVoicePackage(), file).toFile();
                     if (mp3File.exists()) {

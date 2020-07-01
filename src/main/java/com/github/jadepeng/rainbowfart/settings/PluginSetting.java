@@ -66,6 +66,7 @@ public class PluginSetting implements Configurable {
             settings.setCustomVoicePackage(settingForm.getPackage());
             settings.setType(settingForm.getType());
             settings.setTtsSettings(settingForm.getTTSSetting());
+            settings.setBuildinPackage(settingForm.getBuiltinPackage());
         }
         // 重新加载
         Context.loadConfig();
