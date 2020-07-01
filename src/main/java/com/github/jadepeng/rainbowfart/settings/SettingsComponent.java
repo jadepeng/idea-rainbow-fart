@@ -20,6 +20,7 @@ import org.jdesktop.swingx.combobox.ListComboBoxModel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -66,9 +67,6 @@ public class SettingsComponent {
                 TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
 
         ttsGroup = FormBuilder.createFormBuilder()
-//                .addLabeledComponent(new JBLabel("App id:"), txtApiId, 1, false)
-//                .addLabeledComponent(new JBLabel("Api Key: "), txtAppKey, 1, false)
-//                .addLabeledComponent(new JBLabel("Api Secret:"), txtApiSecret, 1, false)
                 .addLabeledComponent(new JBLabel("VCN: "), cbxVcn, 1, false)
                 .addComponent(new JBLabel("Match Rule Setting: "), 0)
                 .addComponent(createTTSTable())
@@ -77,15 +75,17 @@ public class SettingsComponent {
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(chkEnable, 1)
                 .addLabeledComponent(new JBLabel("Voice Package Type: "), cbxType, 1, false)
-
-                .addComponent(new JBLabel("Builtin Configuration: "), 0)
-                .addLabeledComponent(new JBLabel("Choose Builtin Package: "), txtPackagePath, 1, false)
-                .addComponent(new JBLabel("Custom Configuration: "), 0)
+                .addSeparator()
+                .addComponent(new JBLabel("Builtin Configuration: "), 1)
+                .addLabeledComponent(new JBLabel("Choose Builtin Package: "), cbxBuiltinPackage, 1, false)
+                .addSeparator()
+                .addComponent(new JBLabel("Custom Configuration: "), 1)
                 .addLabeledComponent(new JBLabel("Custom Voice Package Path: "), txtPackagePath, 1, false)
-                .addComponent(new JBLabel("TTS Configuration: "), 0)
+                .addSeparator()
+                .addComponent(new JBLabel("TTS Configuration: "), 1)
 //                .addLabeledComponent(new JBLabel("TTS: "), new LinkLabel("use: https://www.xfyun.cn/services/online_tts", AllIcons.Icons.Ide.NextStep), 1, false)
-                .addComponent(ttsGroup, 0)
-                .addComponentFillVertically(new JPanel(), 0)
+                .addComponent(ttsGroup, 1)
+                .addComponentFillVertically(new JPanel(), 1)
                 .getPanel();
 
         bindSetting();
