@@ -1,11 +1,11 @@
 package com.github.jadepeng.rainbowfart;
 
+import com.github.jadepeng.rainbowfart.bean.Contribute;
 import com.github.jadepeng.rainbowfart.bean.Manifest;
+import com.github.jadepeng.rainbowfart.settings.VoicePackageType;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.Gson;
 import com.github.jadepeng.rainbowfart.settings.FartSettings;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +15,9 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * app context 21:00 23:30 23:00 23:30
@@ -27,11 +30,13 @@ public class Context {
     private static Manifest manifest;
 
     /**
-     * keyword->voices
+     * keyword->Contribute
      */
-    private static Map<String, List<String>> keyword2Voices;
+    private static Map<String, Contribute> keyword2Contributes;
 
     final static String BUILD_IN_VOICE_PACKAGE = "xiaoling";
+
+    static Pattern keywordPattern;
 
     static HashMap<String, String> schedule = new HashMap<String, String>() {{
         put("$time_morning", "0930");
@@ -42,21 +47,13 @@ public class Context {
         put("$time_midnight", "2330");
     }};
 
-
-    /**
-     * play in a single thread pool
-     */
-    static ExecutorService playerTheadPool;
+    static ExecutorService preparePlayThreadPool = new ThreadPoolExecutor(5, 1,
+                                                                         0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(1024),  new ThreadFactoryBuilder()
+                .setNameFormat("prepare-play-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
 
     static ScheduledExecutorService scheduledExecutorService;
 
-    static {
-        ThreadFactory playerFactory = new ThreadFactoryBuilder()
-                .setNameFormat("player-pool-%d").build();
-        playerTheadPool = new ThreadPoolExecutor(1, 1,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024), playerFactory, new ThreadPoolExecutor.AbortPolicy());
-    }
 
     /**
      * init
@@ -65,30 +62,37 @@ public class Context {
      */
     public static void init(Manifest manifest) {
         Context.manifest = manifest;
-        keyword2Voices = new HashMap<>(128);
+        keyword2Contributes = new HashMap<>(128);
 
+        resetSchedulePool();
+
+        manifest.getContributes().stream().parallel().forEach(contribute -> {
+            contribute.getKeywords().forEach(keyword -> {
+                scheduleTimerTask(keyword);
+                keyword2Contributes.put(keyword, contribute);
+            });
+        });
+
+        // build regex
+        String regex = String.join("|", keyword2Contributes.keySet().stream().map(s -> s.replaceAll("\\$|\\.|\\+|\\(|\\)|\\[|\\]", "\\$&")).collect(Collectors.toList()));
+        keywordPattern = Pattern.compile(regex);
+    }
+
+    private static void resetSchedulePool() {
         if (scheduledExecutorService != null) {
             // clear schedule
             scheduledExecutorService.shutdown();
         }
-        scheduledExecutorService = new ScheduledThreadPoolExecutor(10);
+        scheduledExecutorService = new ScheduledThreadPoolExecutor(20);
+    }
 
-        Date now = new Date();
-        Calendar tomorrow = new GregorianCalendar();
-        tomorrow.setTime(now);
-        tomorrow.add(Calendar.DATE, 1);
-        Calendar today = new GregorianCalendar();
-        today.setTime(now);
-        manifest.getContributes().stream().parallel().forEach(contribute -> {
-            contribute.getKeywords().forEach(keyword -> {
-                try {
-                    scheduleTimerTask(tomorrow, today, now, keyword);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                keyword2Voices.put(keyword, contribute.getVoices());
-            });
-        });
+    public static String getBuiltinTtsText() {
+        try {
+            URL filePath = Context.class.getClassLoader().getResource("/default.json");
+            return IOUtils.toString(filePath.openStream(), "utf-8");
+        } catch (IOException e) {
+            return "";
+        }
     }
 
 
@@ -112,7 +116,11 @@ public class Context {
             if (!settings.isEnable()) {
                 return;
             }
-            String json = readVoicePackageJson("manifest.json");
+            // TTS 使用配置里的数据
+            String json = settings.getType() != VoicePackageType.TTS ? readVoicePackageJson("manifest.json") : settings.getTtsSettings().getResourceText();
+            if (StringUtils.isBlank(json)) {
+                json = getBuiltinTtsText();
+            }
             Gson gson = new Gson();
             Manifest manifest = gson.fromJson(json, Manifest.class);
             // load contributes.json
@@ -129,7 +137,13 @@ public class Context {
         }
     }
 
-    static void scheduleTimerTask(Calendar tomorrow, Calendar today, Date now, String type) {
+    static void scheduleTimerTask(String type) {
+        Date now = new Date();
+        Calendar tomorrow = new GregorianCalendar();
+        tomorrow.setTime(now);
+        tomorrow.add(Calendar.DATE, 1);
+        Calendar today = new GregorianCalendar();
+        today.setTime(now);
         if (schedule.containsKey(type)) {
             String timeString = schedule.get(type);
             int hour = Integer.parseInt(timeString.substring(0, 2));
@@ -140,7 +154,7 @@ public class Context {
             today.set(Calendar.MINUTE, minutes);
             long delay = now.getTime() > today.getTime().getTime() ? (tomorrow.getTime().getTime() - now.getTime()) : (today.getTime().getTime() - now.getTime());
             scheduledExecutorService.scheduleAtFixedRate(() -> {
-                play(keyword2Voices.get(type));
+                play(Arrays.asList(keyword2Contributes.get(type)));
             }, delay, 24 * 60 * 60 * 1000, TimeUnit.MILLISECONDS);
         } else if (type.equals("$time_each_hour")) {
             int minutes = new Date().getMinutes();
@@ -148,7 +162,7 @@ public class Context {
             scheduledExecutorService.scheduleAtFixedRate(() -> {
                 int hour = new Date().getHours();
                 if (hour >= 10 && hour <= 17) {
-                    play(keyword2Voices.get(type));
+                    play(Arrays.asList(keyword2Contributes.get(type)));
                 }
             }, (60 - minutes) * 60 * 1000, 60 * 60 * 1000, TimeUnit.MILLISECONDS);
         }
@@ -161,36 +175,37 @@ public class Context {
      * @param inputHistory
      * @return
      */
-    public static List<String> getCandidate(String inputHistory) {
+    public static List<Contribute> getCandidate(String inputHistory) {
 
-
-        final List<String> candidate = new ArrayList<>();
+        final List<Contribute> candidate = new ArrayList<>();
 
         FartSettings settings = FartSettings.getInstance();
         if (!settings.isEnable()) {
             return candidate;
         }
-        if (keyword2Voices != null) {
-            keyword2Voices.forEach((keyword, voices) -> {
-                if (inputHistory.contains(keyword)) {
-                    candidate.addAll(voices);
+        if (keywordPattern != null) {
+            Matcher matcher = keywordPattern.matcher(inputHistory);
+            if (matcher.find()) {
+                String keyword = matcher.group();
+                if (keyword2Contributes.containsKey(keyword)) {
+                    candidate.add(keyword2Contributes.get(keyword));
                 }
-            });
+            }
         }
         if (candidate.isEmpty()) {
-            candidate.addAll(findSpecialKeyword(inputHistory));
+            candidate.addAll(findMatchContribute(inputHistory));
         }
         return candidate;
     }
 
-    static List<String> findSpecialKeyword(String inputHistory) {
-        List<String> candidate = new ArrayList<>();
+    static List<Contribute> findMatchContribute(String inputHistory) {
+        List<Contribute> candidate = new ArrayList<>();
         if (inputHistory.contains(":")) {
             String finalInputHistory = inputHistory.replace(":", "");
             schedule.forEach((key, time) -> {
                 if (finalInputHistory.contains(time)) {
-                    if (keyword2Voices.containsKey(key)) {
-                        candidate.addAll(keyword2Voices.get(key));
+                    if (keyword2Contributes.containsKey(key)) {
+                        candidate.add(keyword2Contributes.get(key));
                     }
                 }
             });
@@ -198,37 +213,12 @@ public class Context {
         return candidate;
     }
 
-    public static void play(List<String> voices) {
+    public static void play(List<Contribute> contributes) {
+        // play in thread
+        preparePlayThreadPool.submit(()-> Mp3Player.play(contributes));
+    }
 
-        FartSettings settings = FartSettings.getInstance();
-        if (!settings.isEnable()) {
-            return;
-        }
-        // play in single thread
-        playerTheadPool.submit(() -> {
-            String file = voices.get(new Random().nextInt() % voices.size());
-            try {
-                InputStream inputStream = null;
-                if (StringUtils.isEmpty(settings.getCustomVoicePackage())) {
-                    inputStream = Context.class.getResourceAsStream("/" + BUILD_IN_VOICE_PACKAGE + "/" + file);
-                } else {
-                    File mp3File = Paths.get(settings.getCustomVoicePackage(), file).toFile();
-                    if (mp3File.exists()) {
-                        try {
-                            inputStream = new FileInputStream(mp3File);
-                        } catch (FileNotFoundException e) {
-                        }
-                    } else {
-                        return;
-                    }
-                }
-                if (inputStream != null) {
-                    Player player = new Player(inputStream);
-                    player.play();
-                    player.close();
-                }
-            } catch (JavaLayerException e) {
-            }
-        });
+    public static void main(String[] args) {
+        System.out.println("xx+()$".replaceAll("\\$|\\.|\\+|\\(|\\)|\\[|\\]", "\\\\$0"));
     }
 }

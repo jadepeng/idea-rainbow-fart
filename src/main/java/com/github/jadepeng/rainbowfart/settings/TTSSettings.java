@@ -1,14 +1,25 @@
 package com.github.jadepeng.rainbowfart.settings;
 
+import java.io.Serializable;
+
 /**
  * tts 合成配置
  */
-public class TTSSettings {
+public class TTSSettings implements Serializable {
     String appid;
     String apiSecret;
     String apiKey;
     String vcn;
+    String vcnName;
     String resourceText;
+
+    public String getVcnName() {
+        return vcnName;
+    }
+
+    public void setVcnName(String vcnName) {
+        this.vcnName = vcnName;
+    }
 
     public String getAppid() {
         return appid;

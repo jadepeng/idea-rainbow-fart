@@ -1,5 +1,6 @@
 package com.github.jadepeng.rainbowfart.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,23 @@ public class Contribute {
     List<String> keywords;
     List<String> voices;
     List<String> text;
+    List<String> regexps;
     String name;
+
+    public Contribute(){
+        name = "";
+        keywords = new ArrayList<>();
+        text = new ArrayList<>();
+        regexps = new ArrayList<>();
+    }
+
+    public List<String> getRegexps() {
+        return regexps;
+    }
+
+    public void setRegexps(List<String> regexps) {
+        this.regexps = regexps;
+    }
 
     public List<String> getKeywords() {
         return keywords;

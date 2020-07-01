@@ -72,6 +72,8 @@ public class FartSettings implements PersistentStateComponent<FartSettings> {
     public void loadState(@NotNull FartSettings state) {
         this.customVoicePackage = state.customVoicePackage;
         this.enable = state.isEnable();
+        this.ttsSettings = state.ttsSettings;
+        this.type = state.type;
     }
 
     public static FartSettings getInstance(){

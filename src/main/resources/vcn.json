@@ -1,0 +1,67 @@
+{
+  "flag": true,
+  "code": 0,
+  "desc": "成功",
+  "data": [
+    {
+      "id": {
+        "channel": "tts",
+        "code": "x_xiaoling",
+        "function": "vcn.x_xiaoling"
+      },
+      "desc": "讯飞玲姐姐",
+      "languages": "普通话",
+      "characteristic": "女声"
+    },
+    {
+      "id": {
+        "channel": "tts",
+        "code": "xiaoyan",
+        "function": ""
+      },
+      "desc": "讯飞小燕",
+      "languages": "普通话",
+      "characteristic": "女声"
+    },
+    {
+      "id": {
+        "channel": "tts",
+        "code": "aisjiuxu",
+        "function": ""
+      },
+      "desc": "讯飞许久",
+      "languages": "普通话",
+      "characteristic": "男声"
+    },
+    {
+      "id": {
+        "channel": "tts",
+        "code": "aisxping",
+        "function": ""
+      },
+      "desc": "讯飞小萍",
+      "languages": "普通话",
+      "characteristic": "女声"
+    },
+    {
+      "id": {
+        "channel": "tts",
+        "code": "aisbabyxu",
+        "function": ""
+      },
+      "desc": "讯飞小宝",
+      "languages": "普通话",
+      "characteristic": "童声"
+    },
+    {
+      "id": {
+        "channel": "tts",
+        "code": "aisjinger",
+        "function": ""
+      },
+      "desc": "讯飞小婧",
+      "languages": "普通话",
+      "characteristic": "女声"
+    }
+  ]
+}

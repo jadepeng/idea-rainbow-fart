@@ -1,17 +1,23 @@
 <idea-plugin>
     <id>com.github.jadepeng.rainbowfart</id>
-    <name>Rainbow Fart</name>
+    <name>Rainbow Fart(TTS Version)</name>
     <vendor email="pjq518@qq.com" url="https://github.com/jadepeng">jadepeng</vendor>
 
     <description><![CDATA[
-        <strong>Rainbow Fart for IntelliJ based IDEs</strong>
+        <strong>Rainbow Fart (TTS) for IntelliJ based IDEs</strong>
         <br/>
         An IDEA extension that keeps giving you compliment while you are coding.
+        Support for custom keywords and text, custom text can be broadcast through online speech synthesis.
+        VSCode's Voice Package is Compatible with this plugin.
+        <br/>
+        一款在你编程时疯狂拍你马屁的插件.
+        本插件支持通过在线语音合成播报，支持自定义关键词和文本，同时语音合成还支持自定义语音合成发音人.
+        另外，兼容VSCode版本的语音包
         ]]></description>
 
     <change-notes><![CDATA[
 
-        <p>1.0</p>
+        <p>1.0.1</p>
         <ul>
             <li>支持内置中文语音以及自定义语音包</li>
         </ul>

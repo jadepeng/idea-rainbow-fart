@@ -1,5 +1,6 @@
 package com.github.jadepeng.rainbowfart;
 
+import com.github.jadepeng.rainbowfart.bean.Contribute;
 import com.intellij.codeInsight.template.impl.editorActions.TypedActionHandlerBase;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
@@ -30,7 +31,7 @@ public class TypedHandler extends TypedActionHandlerBase {
         inputHistory.add(String.valueOf(charTyped));
         String str = StringUtils.join(inputHistory, "");
         try {
-            List<String> voices = Context.getCandidate(str);
+            List<Contribute> voices = Context.getCandidate(str);
             if (!voices.isEmpty()) {
                 Context.play(voices);
                 inputHistory.clear();
