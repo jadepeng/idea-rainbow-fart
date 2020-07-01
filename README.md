@@ -15,26 +15,37 @@
     
 ## 使用说明
 
-默认使用中文语音包，可以在setting里设置
+
+### 使用内置语音包
 
 打开设置：
 
-![彩虹屁设置](./docs/setting1.png)
+- 将voice package type设置为builtin
+- 可以选择内置语音包，共三个，一个官方的中文和英文，一个tts合成的（志玲姐姐）
+
+![彩虹屁设置](./docs/builtin.png)
 
 
-选择第三方语音包：
+### 使用第三方语音包：
 
-![彩虹屁设置](./docs/setting2.png)
+![彩虹屁设置](./docs/custom.png)
 
-可以到 [https://github.com/topics/vscode-rainbow-fart](https://github.com/topics/vscode-rainbow-fart) 查找语音包。
+- 将voice package type设置为custom
+- 可以到 [https://github.com/topics/vscode-rainbow-fart](https://github.com/topics/vscode-rainbow-fart) 查找语音包。
 
 点击确定生效：
 
-![彩虹屁设置](./docs/setting3.png)
+### 使用TTS（推荐）
+
+本插件特色功能，支持自定义关键词和文本，鼠标点击表格可以修改关键词和回复语，修改时enter回车换行，一行代表一个
+
+![彩虹屁设置](./docs/tts.png)
+
+TTS 使用科大讯飞提供的流式API。
 
 
-## 参考
+## 鸣谢
 
 - 插件参考,感谢原作者的贡献
-    - https://github.com/izhangzhihao/intellij-rainbow-fart
-    - https://github.com/SaekiRaku/vscode-rainbow-fart
+    - 对插件开发不熟悉，参考了 https://github.com/izhangzhihao/intellij-rainbow-fart
+    - 语音包引用 https://github.com/SaekiRaku/vscode-rainbow-fart

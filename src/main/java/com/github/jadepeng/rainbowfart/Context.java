@@ -108,7 +108,7 @@ public class Context {
         if (isCustomer) {
             return FileUtils.readFileToString(Paths.get(settings.getCustomVoicePackage(), name).toFile(), "utf-8");
         }
-        URL filePath = PluginStarter.class.getClassLoader().getResource(BUILD_IN_VOICE_PACKAGE + "/" + settings.getCustomVoicePackage() + "/" + name);
+        URL filePath = PluginStarter.class.getClassLoader().getResource(BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + name);
         return IOUtils.toString(filePath.openStream(), "utf-8");
     }
 

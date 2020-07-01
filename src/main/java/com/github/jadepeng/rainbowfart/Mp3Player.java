@@ -109,7 +109,7 @@ public class Mp3Player {
             try {
                 InputStream inputStream = null;
                 if (settings.getType() == VoicePackageType.Builtin) {
-                    inputStream = Context.class.getResourceAsStream(Context.BUILD_IN_VOICE_PACKAGE + "/" + settings.getCustomVoicePackage() + "/" + file);
+                    inputStream = Context.class.getResourceAsStream(Context.BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + file);
                 } else {
                     File mp3File = Paths.get(settings.getCustomVoicePackage(), file).toFile();
                     if (mp3File.exists()) {
