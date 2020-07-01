@@ -47,13 +47,16 @@ public class Context {
         put("$time_midnight", "2330");
     }};
 
-    static ExecutorService preparePlayThreadPool = new ThreadPoolExecutor(5, 1,
-                                                                         0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024),  new ThreadFactoryBuilder()
-                .setNameFormat("prepare-play-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
+    static ExecutorService preparePlayThreadPool;
 
     static ScheduledExecutorService scheduledExecutorService;
 
+    static {
+        preparePlayThreadPool = new ThreadPoolExecutor(2, 5,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(1024),  new ThreadFactoryBuilder()
+                .setNameFormat("prepare-play-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
+    }
 
     /**
      * init
@@ -68,6 +71,9 @@ public class Context {
 
         manifest.getContributes().stream().parallel().forEach(contribute -> {
             contribute.getKeywords().forEach(keyword -> {
+                if(StringUtils.isBlank(keyword)){
+                    return;
+                }
                 scheduleTimerTask(keyword);
                 keyword2Contributes.put(keyword, contribute);
             });

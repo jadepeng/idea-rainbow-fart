@@ -30,5 +30,5 @@ patchPluginXml {
       1.0.3 支持支持通过在线语音合成播报，支持自定义关键词和文本，同时语音合成还支持自定义语音合成发音人.
       1.0.2 内置中文包更新为玲姐姐语音包，需要官方语音包的可以从vscode版本下载
       1.0.1 支持内置中文语音以及自定义语音包.<br>
-      <em>rainbow-fart</em>"""
+      <em>rainbow-fart</em> <em>rainbow-fart-tts</em>"""
 }

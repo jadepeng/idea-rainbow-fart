@@ -41,9 +41,9 @@ public class VoicePackageMakerApp {
     private static final String DEFAULT_VCN = "x_xiaoling";
 
     // x_xiaoling x2_xiaofang
-    private static final String VoicePackageDir = "voicesPackages";
+    private static final String VoicePackageDir = "src/main/resources/cache";
 
-    private static final String manifestFile = "manifest.json";
+    private static final String manifestFile = "src/main/default.json";
 
     public static final Gson json = new Gson();
 
@@ -62,39 +62,25 @@ public class VoicePackageMakerApp {
         AtomicInteger finishCount = new AtomicInteger();
 
         String vcnName = args.length > 0 ? args[0] : DEFAULT_VCN;
-        String description = args.length > 1 ? args[1] : "讯飞小玲";
-        String author = args.length > 2 ? args[2] : "jadepeng";
-        // 文件夹
-        File packagePath = Paths.get(VoicePackageDir, vcnName).toFile();
-        if (!packagePath.exists()) {
-            packagePath.mkdirs();
-        }
 
-        String packageName = packagePath.toString();
+        // 文件夹
         String json = new String(FileUtil.read(manifestFile));
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Manifest manifest = gson.fromJson(json, Manifest.class);
 
         int count = 0;
         for (Contribute contribute : manifest.getContributes()) {
-            String name = contribute.getName().replace("$", "");
-            int index = 1;
             if (contribute.getVoices() == null) {
                 contribute.setVoices(new ArrayList<>());
             } else {
                 contribute.getVoices().clear();
             }
             for (String text : contribute.getText()) {
+                File cacheFile = Paths.get(VoicePackageDir, DEFAULT_VCN + (DEFAULT_VCN + text).hashCode() + ".mp3").toFile();
+                tts2mp3(text, cacheFile.toString(), vcnName, finishCount);
                 count++;
-                String fileName = name + (index++) + ".mp3";
-                contribute.getVoices().add(fileName);
-                tts2mp3(text, Paths.get(packageName, fileName).toString(), vcnName, finishCount);
             }
         }
-
-        // 更新manifest文件
-        String finalJson = gson.toJson(manifest);
-        FileUtil.save(packageName, manifestFile, finalJson.getBytes("UTF-8"));
 
         // 等待完成
         while (finishCount.get() < count) {

@@ -7,7 +7,7 @@
         <strong>Rainbow Fart (TTS) for IntelliJ based IDEs</strong>
         <br/>
         An IDEA extension that keeps giving you compliment while you are coding.
-        Support for custom keywords and text, custom text can be broadcast through online speech synthesis.
+        Support for custom keywords and text, custom text can be play through online speech synthesis.
         VSCode's Voice Package is Compatible with this plugin.
         <br/>
         一款在你编程时疯狂拍你马屁的插件.
@@ -37,7 +37,7 @@
                             id="fart"/>
         <postStartupActivity implementation="com.github.jadepeng.rainbowfart.PluginStarter"/>
         <applicationService serviceImplementation="com.github.jadepeng.rainbowfart.settings.FartSettings"/>
-        <applicationConfigurable instance="com.github.jadepeng.rainbowfart.settings.MainSetting"/>
+        <applicationConfigurable instance="com.github.jadepeng.rainbowfart.settings.PluginSetting"/>
     </extensions>
 
 </idea-plugin>

@@ -42,9 +42,9 @@ public class SettingsComponent {
     Map<String, String> name2vcn = new HashMap<>();
 
     JPanel ttsGroup;
-    JBTextField txtApiId = new JBTextField();
-    JBTextField txtApiSecret = new JBTextField();
-    JBTextField txtAppKey = new JBTextField();
+//    JBTextField txtApiId = new JBTextField();
+//    JBTextField txtApiSecret = new JBTextField();
+//    JBTextField txtAppKey = new JBTextField();
     ComboBox cbxVcn = new ComboBox();
 
     TTSTableModel tableModel = new TTSTableModel();
@@ -153,9 +153,9 @@ public class SettingsComponent {
         Manifest manifest = new Gson().fromJson(settings.getTtsSettings().getResourceText(), Manifest.class);
         this.tableModel.addRows(manifest.getContributes());
 
-        this.txtAppKey.setText(settings.getTtsSettings().getApiKey());
-        this.txtApiId.setText(settings.getTtsSettings().getAppid());
-        this.txtApiSecret.setText(settings.getTtsSettings().getApiSecret());
+//        this.txtAppKey.setText(settings.getTtsSettings().getApiKey());
+//        this.txtApiId.setText(settings.getTtsSettings().getAppid());
+//        this.txtApiSecret.setText(settings.getTtsSettings().getApiSecret());
         this.cbxVcn.setSelectedItem(settings.getTtsSettings().getVcnName());
         this.cbxType.setSelectedItem(settings.getType() == null ? VoicePackageType.Builtin.toString() : settings.getType().toString());
     }
@@ -178,9 +178,9 @@ public class SettingsComponent {
 
     public TTSSettings getTTSSetting() {
         TTSSettings settings = new TTSSettings();
-        settings.setApiKey(this.txtAppKey.getText());
-        settings.setApiSecret(this.txtApiSecret.getText());
-        settings.setAppid(this.txtApiId.getText());
+//        settings.setApiKey(this.txtAppKey.getText());
+//        settings.setApiSecret(this.txtApiSecret.getText());
+//        settings.setAppid(this.txtApiId.getText());
         Manifest manifest = new Manifest();
         manifest.setContributes(this.tableModel.getDataLists());
         settings.setResourceText(new GsonBuilder().setPrettyPrinting().create().toJson(manifest));

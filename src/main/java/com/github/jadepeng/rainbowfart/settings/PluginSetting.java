@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class MainSetting implements Configurable {
+public class PluginSetting implements Configurable {
 
     SettingsComponent settingForm;
 
