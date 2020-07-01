@@ -1,18 +1,23 @@
 # idea-rainbow-fart
 一个在你编程时疯狂称赞你的 IDEA扩展插件,兼容VSCode版本语音包 | An IDEA extension that keeps giving you compliment while you are coding, it will checks…
 
-独家支持TTS合成，你可以自定义关键词和播报文本。
 
-## 更新
+## 安装方法
 
- - 1.0.2 
-    - 支持设置语音包类型： TTS(在线语音合成)，Custom(自定义), Builtin(内置)
-    - 支持支持通过在线语音合成播报，支持自定义关键词和文本，同时语音合成还支持自定义语音合成发音人.
 
- - 1.0.1 
-    - 支持内置语音包，来源于 https://github.com/SaekiRaku/vscode-rainbow-fart
-    - 支持自定义语音包
-    
+先到[https://github.com/jadepeng/idea-rainbow-fart/releases](https://github.com/jadepeng/idea-rainbow-fart/releases) 下载最新的插件。
+
+![Release](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422367202.png)
+
+下载rainbow-fart-1.0-SNAPSHOT.zip，然后打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
+
+将`rainbow-fart-1.0-SNAPSHOT.zip`解压到plugins目录，如图所示：
+
+![解压](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422479468.png)
+
+
+然后重启IDEA即可。
+
 ## 使用说明
 
 
