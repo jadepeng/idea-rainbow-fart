@@ -46,6 +46,6 @@ TTS 使用科大讯飞提供的流式API。
 
 ## 鸣谢
 
-- 插件参考,感谢原作者的贡献
-    - 对插件开发不熟悉，参考了 https://github.com/izhangzhihao/intellij-rainbow-fart
-    - 语音包引用 https://github.com/SaekiRaku/vscode-rainbow-fart
+- 插件开发参考 https://github.com/izhangzhihao/intellij-rainbow-fart
+- 语音包引用自 https://github.com/SaekiRaku/vscode-rainbow-fart
+    

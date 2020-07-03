@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  配置项
+ *  Contribute
  * @author jqpeng
  */
 public class Contribute {

@@ -3,11 +3,11 @@ package com.github.jadepeng.rainbowfart;
 import java.io.*;
 
 /**
- * 文件操作工具类
+ * File Helper
  */
 public class FileUtil {
 	/**
-	 * 读取文件内容为二进制数组
+	 * Read byte
 	 * 
 	 * @param filePath
 	 * @return
@@ -23,7 +23,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * 流转二进制数组
+	 * read stream
 	 * 
 	 * @param in
 	 * @return
@@ -41,7 +41,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * 保存文件
+	 * save file
 	 * 
 	 * @param filePath
 	 * @param fileName

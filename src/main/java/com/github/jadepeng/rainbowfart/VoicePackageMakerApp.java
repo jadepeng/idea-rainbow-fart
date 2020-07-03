@@ -21,23 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * 声音包制作工具
- */
+
 public class VoicePackageMakerApp {
     private static final String hostUrl = "https://tts-api.xfyun.cn/v2/tts";
     // not and stram  stream()
 
-    // 到控制台-语音合成页面获取
     private static final String APPID = "51b60849";
 
-    // 到控制台-语音合成页面获取
     private static final String API_SECRET = "708c15ae7967bdaa26e1023a138cb05c";
 
-    //到控制台-语音合成页面获取
     private static final String API_KEY = "d73ef7b81eb0228f1e7bb2b586d9f935";
 
-    // 默认发音人
     private static final String DEFAULT_VCN = "x_xiaoling";
 
     // x_xiaoling x2_xiaofang
@@ -63,7 +57,6 @@ public class VoicePackageMakerApp {
 
         String vcnName = args.length > 0 ? args[0] : DEFAULT_VCN;
 
-        // 文件夹
         String json = new String(FileUtil.read(manifestFile));
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Manifest manifest = gson.fromJson(json, Manifest.class);
@@ -82,7 +75,7 @@ public class VoicePackageMakerApp {
             }
         }
 
-        // 等待完成
+        // wait complete
         while (finishCount.get() < count) {
             Thread.sleep(1000);
         }
@@ -91,13 +84,10 @@ public class VoicePackageMakerApp {
     }
 
     static void tts2mp3(String text, String mp3Path, String vcn, AtomicInteger finishCount) throws Exception {
-        // 构建鉴权url
         String authUrl = getAuthUrl(hostUrl, API_KEY, API_SECRET);
         OkHttpClient client = new OkHttpClient.Builder().build();
-        //将url中的 schema http://和https://分别替换为ws:// 和 wss://
         String url = authUrl.replace("http://", "ws://").replace("https://", "wss://");
         Request request = new Request.Builder().url(url).build();
-        // 存放音频的文件
         File f = new File(mp3Path);
         if (!f.exists()) {
             f.createNewFile();
@@ -112,41 +102,35 @@ public class VoicePackageMakerApp {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //发送数据
                 JsonObject frame = new JsonObject();
                 JsonObject business = new JsonObject();
                 JsonObject common = new JsonObject();
                 JsonObject data = new JsonObject();
-                // 填充common
                 common.addProperty("app_id", APPID);
-                //填充business
                 business.addProperty("aue", "lame");
                 business.addProperty("sfl", 1);
-                business.addProperty("tte", "UTF8");//小语种必须使用UNICODE编码
-                business.addProperty("vcn", vcn);//到控制台-我的应用-语音合成-添加试用或购买发音人，添加后即显示该发音人参数值，若试用未添加的发音人会报错11200
+                business.addProperty("tte", "UTF8");
+                business.addProperty("vcn", vcn);
                 business.addProperty("pitch", 50);
                 business.addProperty("volume", 50);
                 business.addProperty("speed", 50);
-                //填充data
-                data.addProperty("status", 2);//固定位2
+                data.addProperty("status", 2);
                 try {
                     data.addProperty("text", Base64.getEncoder().encodeToString(text.getBytes("utf8")));
-                    //使用小语种须使用下面的代码，此处的unicode指的是 utf16小端的编码方式，即"UTF-16LE"”
                     //data.addProperty("text", Base64.getEncoder().encodeToString(text.getBytes("UTF-16LE")));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //填充frame
                 frame.add("common", common);
                 frame.add("business", business);
                 frame.add("data", data);
                 webSocket.send(frame.toString());
+                // while
             }
 
             @Override
             public void onMessage(WebSocket webSocket, String text) {
                 super.onMessage(webSocket, text);
-                //处理返回数据
                 System.out.println("receive=>" + text);
                 ResponseData resp = null;
                 try {
@@ -169,9 +153,8 @@ public class VoicePackageMakerApp {
                             e.printStackTrace();
                         }
                         if (resp.getData().status == 2) {
-                            // todo  resp.data.status ==2 说明数据全部返回完毕，可以关闭连接，释放资源
                             System.out.println("session end ");
-                            System.out.println("合成的音频文件保存在：" + f.getPath());
+                            System.out.println("tts file save to " + f.getPath());
                             webSocket.close(1000, "");
                             finishCount.incrementAndGet();
                             try {
@@ -256,8 +239,8 @@ public class VoicePackageMakerApp {
     }
 
     public static class Data {
-        private int status;  //标志音频是否返回结束  status=1，表示后续还有音频返回，status=2表示所有的音频已经返回
-        private String audio;  //返回的音频，base64 编码
-        private String ced;  // 合成进度
+        private int status;
+        private String audio;
+        private String ced;
     }
 }

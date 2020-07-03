@@ -3,8 +3,11 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.21'
 }
 
+
+apply from: "$rootDir/scripts/verifier.gradle"
+
 group 'com.github.jadepeng.rainbowfart'
-version '1.0.3'
+version '1.0.4'
 
 sourceCompatibility = 1.8
 
@@ -20,19 +23,29 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation('javazoom:jlayer:1.0.1')
     implementation('com.squareup.okhttp3:okhttp:3.13.1')
+    implementation('commons-io:commons-io:2.7')
 }
 
 intellij {
-    version '2018.2.4'
+    version '2020.1.2'
 }
+
 patchPluginXml {
     changeNotes """
-   - 1.0.2 
+   - 1.0.4 
+    - 更新intellij版本
+   <br />
+   - 1.0.3
     - 支持设置语音包类型： TTS(在线语音合成)，Custom(自定义), Builtin(内置)
     - 支持支持通过在线语音合成播报，支持自定义关键词和文本，同时语音合成还支持自定义语音合成发音人.
-
+  <br />
   -1.0.1 
     - 支持内置中文语音包
     - 支持自定义语音包
       <em>rainbow-fart</em> <em>rainbow-fart-tts</em>"""
+}
+
+pluginVerifier {
+    pluginFileName = "$rootProject.name-$version"
+    ides = ["IC-2018.1", "IC-2019.1", "IC-2020.1", "CL-2020.1"]
 }

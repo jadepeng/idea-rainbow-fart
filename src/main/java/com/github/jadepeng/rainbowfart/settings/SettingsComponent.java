@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 配置UI组件
+ * Setting Component
  *
  * @author jqpeng
  */
@@ -159,13 +159,8 @@ public class SettingsComponent {
             settings.getTtsSettings().setResourceText(Context.getBuiltinTtsText());
 
         }
-
         Manifest manifest = new Gson().fromJson(settings.getTtsSettings().getResourceText(), Manifest.class);
         this.tableModel.addRows(manifest.getContributes());
-
-//        this.txtAppKey.setText(settings.getTtsSettings().getApiKey());
-//        this.txtApiId.setText(settings.getTtsSettings().getAppid());
-//        this.txtApiSecret.setText(settings.getTtsSettings().getApiSecret());
         this.cbxVcn.setSelectedItem(settings.getTtsSettings().getVcnName());
         this.cbxType.setSelectedItem(settings.getType() == null ? VoicePackageType.Builtin.toString() : settings.getType().toString());
         this.cbxBuiltinPackage.setSelectedItem(settings.getBuildinPackage());
@@ -193,14 +188,13 @@ public class SettingsComponent {
 
     public TTSSettings getTTSSetting() {
         TTSSettings settings = new TTSSettings();
-//        settings.setApiKey(this.txtAppKey.getText());
-//        settings.setApiSecret(this.txtApiSecret.getText());
-//        settings.setAppid(this.txtApiId.getText());
         Manifest manifest = new Manifest();
         manifest.setContributes(this.tableModel.getDataLists());
         settings.setResourceText(new GsonBuilder().setPrettyPrinting().create().toJson(manifest));
-        settings.setVcnName(this.cbxVcn.getSelectedItem().toString());
-        settings.setVcn(this.name2vcn.get(settings.getVcnName()));
+        if(this.cbxVcn.getSelectedItem() != null) {
+            settings.setVcnName(this.cbxVcn.getSelectedItem().toString());
+            settings.setVcn(this.name2vcn.get(settings.getVcnName()));
+        }
         return settings;
     }
 }

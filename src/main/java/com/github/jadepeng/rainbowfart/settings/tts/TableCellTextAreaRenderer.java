@@ -10,14 +10,13 @@ import java.awt.*;
  */
 public class TableCellTextAreaRenderer extends JTextArea implements TableCellRenderer {
     public TableCellTextAreaRenderer() {
-        setLineWrap(true); //设置为换行
-        setWrapStyleWord(true); //设置使用单词边界来换行
+        setLineWrap(true);
+        setWrapStyleWord(true);
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus, int row, int column) {
-        // 计算当下行的最佳高度
         int maxPreferredHeight = 0;
         for (int i = 0; i < table.getColumnCount(); i++) {
             setText("  " + table.getValueAt(row, i));
