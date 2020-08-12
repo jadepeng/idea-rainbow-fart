@@ -1,5 +1,6 @@
-package com.github.jadepeng.rainbowfart;
+package com.github.jadepeng.rainbowfart.extensions;
 
+import com.github.jadepeng.rainbowfart.Context;
 import com.github.jadepeng.rainbowfart.bean.Contribute;
 import com.intellij.codeInsight.template.impl.editorActions.TypedActionHandlerBase;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  输入响应
+ *  Typed Action Handler
  */
 public class TypedHandler extends TypedActionHandlerBase {
 

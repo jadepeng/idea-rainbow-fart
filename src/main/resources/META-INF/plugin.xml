@@ -16,6 +16,7 @@
         ]]></description>
 
     <change-notes><![CDATA[
+
         <br/>
         ]]></change-notes>
 
@@ -27,11 +28,13 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <editorTypedHandler implementationClass="com.github.jadepeng.rainbowfart.TypedHandler"
+        <editorTypedHandler implementationClass="com.github.jadepeng.rainbowfart.extensions.TypedHandler"
                             id="fart"/>
         <postStartupActivity implementation="com.github.jadepeng.rainbowfart.PluginStarter"/>
         <applicationService serviceImplementation="com.github.jadepeng.rainbowfart.settings.FartSettings"/>
         <applicationConfigurable instance="com.github.jadepeng.rainbowfart.settings.PluginSetting"/>
+        <copyPastePostProcessor implementation="com.github.jadepeng.rainbowfart.extensions.CopyPasteHanler" />
+        <commentCompleteHandler implementation="com.github.jadepeng.rainbowfart.extensions.CommentHandler" />
     </extensions>
 
 </idea-plugin>

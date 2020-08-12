@@ -28,6 +28,8 @@ dependencies {
 
 intellij {
     version '2020.1.2'
+    //  not update since and util on build
+    updateSinceUntilBuild = false
 }
 
 patchPluginXml {

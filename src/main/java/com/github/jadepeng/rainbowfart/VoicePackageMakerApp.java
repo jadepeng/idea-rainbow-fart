@@ -34,7 +34,7 @@ public class VoicePackageMakerApp {
 
     private static final String DEFAULT_VCN = "x_xiaoling";
 
-    // x_xiaoling x2_xiaofang
+    // if
     private static final String VoicePackageDir = "src/main/resources/cache";
 
     private static final String manifestFile = "src/main/default.json";
@@ -45,7 +45,7 @@ public class VoicePackageMakerApp {
     public static void syncTts2File(String text, String mp3Path, String vcn) throws Exception {
         AtomicInteger finishCount = new AtomicInteger();
         tts2mp3(text, mp3Path, vcn, finishCount);
-        // 等待完成
+        // wait tts finished
         while (finishCount.get() < 1) {
             Thread.sleep(100);
         }

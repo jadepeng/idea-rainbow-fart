@@ -154,9 +154,9 @@ public class Context {
             String timeString = schedule.get(type);
             int hour = Integer.parseInt(timeString.substring(0, 2));
             int minutes = Integer.parseInt(timeString.substring(2, 4));
-            tomorrow.set(Calendar.HOUR, hour);
+            tomorrow.set(Calendar.HOUR_OF_DAY, hour);
             tomorrow.set(Calendar.MINUTE, minutes);
-            today.set(Calendar.HOUR, hour);
+            today.set(Calendar.HOUR_OF_DAY, hour);
             today.set(Calendar.MINUTE, minutes);
             long delay = now.getTime() > today.getTime().getTime() ? (tomorrow.getTime().getTime() - now.getTime()) : (today.getTime().getTime() - now.getTime());
             scheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -222,6 +222,14 @@ public class Context {
     public static void play(List<Contribute> contributes) {
         // play in thread
         preparePlayThreadPool.submit(() -> Mp3Player.play(contributes));
+    }
+
+    public static void onEvent(String event) {
+        System.out.println(event);
+    }
+
+    public static void onEvent(String event, Object args) {
+        System.out.println(event + ":" + args);
     }
 
     public static void main(String[] args) {
