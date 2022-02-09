@@ -6,12 +6,21 @@
 
 到[releases](https://github.com/jadepeng/idea-rainbow-fart/releases) 下载最新的插件。
 
-下载Release，然后打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
+下载最新Release
+
+### 通过Setting - plugins - Install plugins from disk 安装
+
+![安装](./install.png)
+
+然后选择下载的插件zip包即可。
+
+### 手动安装
+
+打开Idea的插件目录，比如笔者的目录是`C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins`
 
 将`rainbow-fart-1.x.zip`解压到plugins目录，如图所示：
 
 ![解压](https://gitee.com/jadepeng/pic/raw/master/pic/2020/6/29/1593422479468.png)
-
 
 然后重启IDEA即可。
 
