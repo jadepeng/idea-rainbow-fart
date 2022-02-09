@@ -1,5 +1,6 @@
 package com.github.jadepeng.rainbowfart.extensions;
 
+import com.github.jadepeng.rainbowfart.Constants;
 import com.github.jadepeng.rainbowfart.Context;
 import com.intellij.codeInsight.editorActions.CommentCompleteHandler;
 import com.intellij.lang.CodeDocumentationAwareCommenter;
@@ -15,7 +16,7 @@ public class CommentHandler implements CommentCompleteHandler {
 
     @Override
     public boolean isApplicable(PsiComment comment, CodeDocumentationAwareCommenter commenter) {
-        Context.onEvent("CommentComplete");
+        Context.onEvent(Constants.EVENT_COMMENTS);
         return false;
     }
 }

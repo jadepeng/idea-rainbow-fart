@@ -1,34 +1,46 @@
 package com.github.jadepeng.rainbowfart.settings;
 
-import com.github.jadepeng.rainbowfart.Context;
-import com.github.jadepeng.rainbowfart.bean.Manifest;
-import com.github.jadepeng.rainbowfart.settings.tts.*;
-import com.google.gson.*;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.SimpleToolWindowPanel;
-import com.intellij.openapi.ui.TextComponentAccessor;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.ui.components.*;
-import com.intellij.ui.components.labels.LinkLabel;
-import com.intellij.util.ui.FormBuilder;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.*;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.combobox.ListComboBoxModel;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.github.jadepeng.rainbowfart.Context;
+import com.github.jadepeng.rainbowfart.bean.Manifest;
+import com.github.jadepeng.rainbowfart.settings.tts.AddRowAction;
+import com.github.jadepeng.rainbowfart.settings.tts.DeleteRowAction;
+import com.github.jadepeng.rainbowfart.settings.tts.TTSColumnModel;
+import com.github.jadepeng.rainbowfart.settings.tts.TTSTableModel;
+import com.github.jadepeng.rainbowfart.settings.tts.TableCellTextAreaRenderer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.ActionToolbar;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
+import com.intellij.openapi.ui.ComboBox;
+import com.intellij.openapi.ui.SimpleToolWindowPanel;
+import com.intellij.openapi.ui.TextComponentAccessor;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.ui.components.JBCheckBox;
+import com.intellij.ui.components.JBLabel;
+import com.intellij.ui.components.JBScrollPane;
+import com.intellij.ui.components.JBTextField;
+import com.intellij.util.ui.FormBuilder;
 
 /**
  * Setting Component
@@ -44,12 +56,11 @@ public class SettingsComponent {
     Map<String, String> name2vcn = new HashMap<>();
 
     JPanel ttsGroup;
-    //    JBTextField txtApiId = new JBTextField();
-//    JBTextField txtApiSecret = new JBTextField();
-//    JBTextField txtAppKey = new JBTextField();
-    ComboBox cbxVcn = new ComboBox();
 
-    ComboBox cbxBuiltinPackage = new ComboBox(new ListComboBoxModel(Arrays.asList("built-in-voice-chinese", "built-in-voice-english", "tts-xiaoling")));
+    ComboBox<String> cbxVcn = new ComboBox<>();
+
+    ComboBox<String> cbxBuiltinPackage = new ComboBox<String>(
+            new ListComboBoxModel<String>(Arrays.asList("built-in-voice-chinese", "built-in-voice-english", "tts-xiaoling")));
 
 
     TTSTableModel tableModel = new TTSTableModel();
@@ -58,8 +69,8 @@ public class SettingsComponent {
         // load vcn
         try {
             loadVCN();
-            this.cbxVcn.setModel(new ListComboBoxModel(this.name2vcn.entrySet().stream().map(e -> e.getKey()).collect(Collectors.toList())));
-        } catch (IOException e) {
+            this.cbxVcn.setModel(new ListComboBoxModel(new ArrayList<>(this.name2vcn.keySet())));
+        } catch (Exception ignored) {
         }
 
         txtPackagePath.addBrowseFolderListener("Choose Custom Voice Package", "Custom Voice Package Path:", null,
@@ -135,7 +146,7 @@ public class SettingsComponent {
     }
 
     void loadVCN() throws IOException {
-        URL filePath = getClass().getClassLoader().getResource("/vcn.json");
+        URL filePath =  Context.class.getResource("/vcn.json");
         String jsonText = IOUtils.toString(filePath.openStream(), "utf-8");
         JsonObject vcnJson = new JsonParser().parse(jsonText).getAsJsonObject();
         JsonArray data = vcnJson.getAsJsonArray("data");

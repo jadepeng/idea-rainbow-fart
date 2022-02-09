@@ -4,8 +4,10 @@ import com.github.jadepeng.rainbowfart.bean.Contribute;
 import com.github.jadepeng.rainbowfart.settings.FartSettings;
 import com.github.jadepeng.rainbowfart.settings.VoicePackageType;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -43,21 +45,20 @@ public class Mp3Player {
         ThreadFactory playerFactory = new ThreadFactoryBuilder()
                 .setNameFormat("player-pool-%d").build();
         playerTheadPool = new ThreadPoolExecutor(1, 1,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024), playerFactory, new ThreadPoolExecutor.AbortPolicy());
+                                                 0L, TimeUnit.MILLISECONDS,
+                                                 new LinkedBlockingQueue<>(1024), playerFactory,
+                                                 new ThreadPoolExecutor.AbortPolicy());
     }
 
     static boolean tryLoadFromBuiltInCache(String cacheFile, File targetFile) {
-        URL cache = Context.class.getClassLoader().getResource("/cache/" + cacheFile);
+        URL cache = Context.class.getResource("/cache/" + cacheFile);
         if (cache != null) {
             try {
                 FileOutputStream outputStream = new FileOutputStream(targetFile);
                 IOUtils.copy(cache.openStream(), outputStream);
                 outputStream.close();
                 return true;
-            } catch (FileNotFoundException e) {
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
 
         }
@@ -67,7 +68,8 @@ public class Mp3Player {
     static void playTTS(List<Contribute> contributes, FartSettings settings) {
         List<String> texts = contributes.stream().flatMap(c -> c.getText().stream()).collect(Collectors.toList());
         String text = texts.get(new Random().nextInt() % texts.size());
-        String cacheFileName = settings.getTtsSettings().getVcn() + (settings.getTtsSettings().getVcn() + text).hashCode() + ".mp3";
+        String cacheFileName =
+                settings.getTtsSettings().getVcn() + (settings.getTtsSettings().getVcn() + text).hashCode() + ".mp3";
         File cacheFile = Paths.get(TEMP_TTS_CACHE_DIR, cacheFileName).toFile();
         // If not exist, try online tts
         if (!cacheFile.exists()) {
@@ -109,7 +111,8 @@ public class Mp3Player {
             try {
                 InputStream inputStream = null;
                 if (settings.getType() == VoicePackageType.Builtin) {
-                    inputStream = Context.class.getResourceAsStream(Context.BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + file);
+                    inputStream = Context.class.getResourceAsStream(
+                            Context.BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + file);
                 } else {
                     File mp3File = Paths.get(settings.getCustomVoicePackage(), file).toFile();
                     if (mp3File.exists()) {
@@ -125,8 +128,7 @@ public class Mp3Player {
                 if (settings.getType() == VoicePackageType.Custom) {
                     inputStream.close();
                 }
-            } catch (JavaLayerException e) {
-            } catch (IOException e) {
+            } catch (Exception ignored) {
             }
         });
     }

@@ -6,6 +6,7 @@ import com.intellij.codeInsight.template.impl.editorActions.TypedActionHandlerBa
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.TypedActionHandler;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Typed Action Handler
+ * Typed Action Handler
  */
 public class TypedHandler extends TypedActionHandlerBase {
 
@@ -26,22 +27,17 @@ public class TypedHandler extends TypedActionHandlerBase {
         super(originalHandler);
     }
 
-
     @Override
     public void execute(@NotNull Editor editor, char charTyped, @NotNull DataContext dataContext) {
         inputHistory.add(String.valueOf(charTyped));
         String str = StringUtils.join(inputHistory, "");
         try {
-            List<Contribute> voices = Context.getCandidate(str);
-            if (!voices.isEmpty()) {
-                Context.play(voices);
+            if (Context.playCandidates(str)) {
                 inputHistory.clear();
             }
-        }catch (Exception e){
-            // TODO
+        } catch (Exception e) {
             inputHistory.clear();
         }
-
         if (this.myOriginalHandler != null) {
             this.myOriginalHandler.execute(editor, charTyped, dataContext);
         }

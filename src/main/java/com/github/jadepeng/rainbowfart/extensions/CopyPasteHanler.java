@@ -1,5 +1,6 @@
 package com.github.jadepeng.rainbowfart.extensions;
 
+import com.github.jadepeng.rainbowfart.Constants;
 import com.github.jadepeng.rainbowfart.Context;
 import com.intellij.codeInsight.editorActions.CopyPastePostProcessor;
 import com.intellij.codeInsight.editorActions.TextBlockTransferableData;
@@ -44,7 +45,7 @@ public class CopyPasteHanler extends CopyPastePostProcessor<TextBlockTransferabl
             buffer.append(text.subSequence(lineStart, lineEnd));
         }
 
-        Context.onEvent("onPaste", buffer.toString());
+        Context.onEvent(Constants.EVENT_PASTE, buffer.toString());
 
         return Collections.emptyList();
     }

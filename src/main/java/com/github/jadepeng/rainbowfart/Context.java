@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.*;
@@ -80,7 +81,8 @@ public class Context {
         });
 
         // build regex
-        String regex = String.join("|", keyword2Contributes.keySet().stream().map(s -> s.replaceAll("\\$|\\.|\\+|\\(|\\)|\\[|\\]", "\\$&")).collect(Collectors.toList()));
+        String regex = keyword2Contributes.keySet().stream().map(s -> s.replaceAll("\\$|\\.|\\+|\\(|\\)|\\[|\\]", "\\$&")).collect(
+                Collectors.joining("|"));
         keywordPattern = Pattern.compile(regex);
     }
 
@@ -94,8 +96,7 @@ public class Context {
 
     public static String getBuiltinTtsText() {
         try {
-            URL filePath = Context.class.getClassLoader().getResource("/default.json");
-            return IOUtils.toString(filePath.openStream(), "utf-8");
+            return IOUtils.toString(Context.class.getResourceAsStream("/default.json"), StandardCharsets.UTF_8);
         } catch (IOException e) {
             return "";
         }
@@ -108,8 +109,8 @@ public class Context {
         if (isCustomer) {
             return FileUtils.readFileToString(Paths.get(settings.getCustomVoicePackage(), name).toFile(), "utf-8");
         }
-        URL filePath = PluginStarter.class.getClassLoader().getResource(BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + name);
-        return IOUtils.toString(filePath.openStream(), "utf-8");
+        URL filePath = PluginStarter.class.getResource(BUILD_IN_VOICE_PACKAGE + "/" + settings.getBuildinPackage() + "/" + name);
+        return IOUtils.toString(filePath.openStream(), StandardCharsets.UTF_8);
     }
 
     /**
@@ -122,7 +123,7 @@ public class Context {
             if (!settings.isEnable()) {
                 return;
             }
-            // TTS 使用配置里的数据
+            // TTS 使用配置里的数据 if if else h
             String json = settings.getType() != VoicePackageType.TTS ? readVoicePackageJson("manifest.json") : settings.getTtsSettings().getResourceText();
             if (StringUtils.isBlank(json)) {
                 json = getBuiltinTtsText();
@@ -139,7 +140,7 @@ public class Context {
             }
             Context.init(manifest);
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -224,12 +225,22 @@ public class Context {
         preparePlayThreadPool.submit(() -> Mp3Player.play(contributes));
     }
 
-    public static void onEvent(String event) {
-        System.out.println(event);
+    public static boolean playCandidates(String keywords) {
+        List<Contribute> voices = getCandidate(keywords);
+        if (!voices.isEmpty()) {
+            Context.play(voices);
+            return true;
+        }
+        return false;
     }
 
-    public static void onEvent(String event, Object args) {
+    public static void onEvent(String event) {
+        playCandidates(event);
+    }
+
+    public static void onEvent(String event, String args) {
         System.out.println(event + ":" + args);
+        playCandidates(args);
     }
 
     public static void main(String[] args) {
